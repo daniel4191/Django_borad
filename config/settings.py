@@ -57,7 +57,10 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            # 현재의 settings가 포함되어있는 config폴더와 동일선상에 있기에 해당 폴더이름만 적어줘도 된다.
+            BASE_DIR / 'templates'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,6 +126,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [
+    # 이역시 이 settings.py파일이 담겨있는 상위폴더와 동등선상에 static이라는 폴더를
+    # 만들어 줄 것이기 때문에 별다른 경로 추가없이 이렇게 단촐하게 써준다.
+    BASE_DIR / 'static'
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

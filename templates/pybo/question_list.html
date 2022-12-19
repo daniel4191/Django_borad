@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% comment %} {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}"> {% endcomment %}
+
+{% block content %}
+<div class="container my-3">
+    <table class="table">
+        <thead>
+        <tr class="thead-dark">
+            <th>number</th>
+            <th>title</th>
+            <th>writed date and time</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if question_list %}
+        {% for question in question_list %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>
+                <a href="{% url 'pybo:detail' question.id %}">
+                    {{ question.subject }}
+                </a>
+            </td>
+            <td>{{ question.create_date }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="3">any question</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+    <a href="{% url 'pybo:question_create' %}" class="btn btn-primary">
+        question submit
+    </a>
+</div>
+{% endblock  %}
+
+{% comment %} before applied loop {% endcomment %}
+{% comment %} 
+{% if question_list %}
+    <ul>
+    {% for question in question_list %}
+        <li><a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>any questions</p>
+{% endif %} {% endcomment %}
+
