@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.utils import timezone
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 from .models import Question
 from .forms import QuestionForm, AnswerForm
@@ -56,6 +57,9 @@ def detail(request, question_id):
 # 여기에 인자로 오는 question_id가 필요한 이유는 어렴풋이는 알겠다.
 
 
+# 비 로그인 상태에서는 User가 아니라 AnonymousUser가 들어가기 때문에 ValueError가 발생된다.
+# 이를 방지하기 위해서 에너테이션을 써주는 것이다.
+@login_required(login_url='common:login')
 def answer_create(request, question_id):
     """
 
@@ -80,6 +84,7 @@ def answer_create(request, question_id):
         form = AnswerForm(request.POST)
         if form.is_valid():
             answer = form.save(commit=False)
+            answer.author = request.user  # models에 추가된 author를 추가
             answer.create_date = timezone.now()
             answer.question = question
             answer.save()
@@ -91,6 +96,9 @@ def answer_create(request, question_id):
     return render(request, 'pybo/question_detail.html', context)
 
 
+# 비 로그인 상태에서는 User가 아니라 AnonymousUser가 들어가기 때문에 ValueError가 발생된다.
+# 이를 방지하기 위해서 에너테이션을 써주는 것이다.
+@login_required(login_url='common:login')
 def question_create(request):
     """
 
@@ -105,6 +113,7 @@ def question_create(request):
             # 오류가 발생된다.
             # 따라서 create_date가 정의 된 이후에 진짜 저장인 save()를 해준다.
             question = form.save(commit=False)
+            question.author = request.user  # models에 추가된 author를 추가
             question.create_date = timezone.now()
             question.save()
             return redirect('pybo:index')

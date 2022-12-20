@@ -1,6 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 
+from . import views
 
 # code line
 app_name = 'common'
@@ -16,5 +17,10 @@ urlpatterns = [
     ), name='login'),
     # logout 매핑
     # 내장함수를 써줬기 때문에 따로 views는 안만져줘도 된다.
-    path('logout/', auth_views.LogoutView.as_view(), name="logout")
+    path('logout/', auth_views.LogoutView.as_view(), name="logout"),
+
+    # 회원가입을 위한 매핑
+    # 하지만 회원가입이란 근본적으로 어떤 양식을 필요로 한다.
+    # "어떤 양식"이 필요하다면 forms를 거쳐서 views로 가는 것이 수월하다.
+    path('signup/', views.signup, name="signup"),
 ]
