@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load pybo_filter %}
 
 {% comment %} {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}"> {% endcomment %}
@@ -14,14 +15,28 @@
         </tr>
         </thead>
         <tbody>
+        {% comment %} 여기서 사용되는 question_list는 views에서 context를 타고 온 것이다. 
+        {% endcomment %}
         {% if question_list %}
         {% for question in question_list %}
         <tr>
-            <td>{{ forloop.counter }}</td>
+            {% comment %} 코드 1 {% endcomment %}
+            {% comment %} <td>{{ forloop.counter }}</td> {% endcomment %}
+            {% comment %} 코드 2 {% endcomment %}
+            {% comment %} 포스트 넘버를 역순으로 보여주는 수식 {% endcomment %}
+            <td>{{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1 }}</td>
             <td>
                 <a href="{% url 'pybo:detail' question.id %}">
                     {{ question.subject }}
                 </a>
+                {% comment %} 질문에 달린 답변의 갯수 표시 start {% endcomment %}
+                {% comment %} 만약 답변이 1개 이상이라면(0보다 크다면) {% endcomment %}
+                {% if question.answer_set.count > 0 %}
+                <span class="text-danger small ml-2">
+                    {{ question.answer_set.count }}
+                </span>
+                {% endif %}
+                {% comment %} 질문에 달린 답변의 갯수 표시 end {% endcomment %}
             </td>
             <td>{{ question.create_date }}</td>
         </tr>
@@ -33,6 +48,61 @@
         {% endif %}
         </tbody>
     </table>
+
+    {% comment %} paging process start {% endcomment %}
+    <ul class="pagination justify-content-center">
+        {% comment %} previous page {% endcomment %}
+        {% if question_list.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ question_list.previous_page_number }}">
+                previous
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">
+                previous
+            </a>
+        </li>
+        {% endif %}
+        {% comment %} page lists {% endcomment %}
+        {% for page_number in question_list.paginator.page_range %}
+        {% comment %} 이if문은 페이지가 단촐하게 보이게끔하는 기능 {% endcomment %}
+        {% comment %} 그리고 html코드는 python코드와 달라서 들여쓰기 등에 유의해야지 작동된다. {% endcomment %}
+        {% comment %} 더불어서 number|add는 뒤에 써있는 숫자만큼 보여달라는 뜻 {% endcomment %}
+        {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}            
+            {% if page_number == question_list.number %}
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" href="?page={{ page_number }}">
+                    {{ page_number }}
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_number }}">
+                    {{ page_number }}
+                </a>
+            </li>
+            {% endif %}      
+        {% endif %}  
+        {% endfor %}
+        {% comment %} next page {% endcomment %}
+        {% if question_list.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ question_list.next_page_number }}">
+                next
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">
+                next
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+    {% comment %} paging process end {% endcomment %}
+    
     <a href="{% url 'pybo:question_create' %}" class="btn btn-primary">
         question submit
     </a>

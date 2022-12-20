@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # local app
-    'pybo'
+    'pybo',
+    'common'
 ]
 
 MIDDLEWARE = [
@@ -137,3 +138,12 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 로그인 성공하면 다른 경로가 아닌 자동으로 이동할 URL
+# '/'로 할 경우 localhost:8000 페이지와 같은 초기 index화면으로 이동되게 된다.
+# 하지만 이러할지라도 localhost:8000페이지에 내용이 없다면 당연히 404에러가 나온다.
+# 이를 해결해 주기 위해서 프로젝트 단위의 urls.py를 수정하자.
+LOGIN_REDIRECT_URL = '/'
+
+# 로그아웃 성공하면 이동할 URL
+LOGOUT_REDIRECT_URL = '/'

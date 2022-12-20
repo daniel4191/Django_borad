@@ -12,9 +12,19 @@
     <title>hello, pybo</title>
 </head>
 <body>
+
+{% comment %} html로 기능의 일부를 부분적으로 만들었고, 그것을 include로 사용 {% endcomment %}
+{% include "navbar.html" %}
+
 {% comment %} contents of basic template start {% endcomment %}
 {% block content %}
 {% endblock  %}
 {% comment %} contents of basic template end {% endcomment %}
+
+{% comment %} jquery {% endcomment %}
+<script src="{% static 'jquery-3.6.2.min.js' %}"></script>
+
+{% comment %} bootstrap js {% endcomment %}
+<script src="{% static 'bootstrap.min.js' %}"></script>
 </body>
 </html>

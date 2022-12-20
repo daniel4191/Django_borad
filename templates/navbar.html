@@ -1,0 +1,26 @@
+{% comment %} navbar start {% endcomment %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <a class="navbar-brand" href="{% url 'pybo:index' %}">Pybo</a>
+    <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
+        data-target="#navbarNav" aria-controls="navbarNav"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse flex-grow-0" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                {% comment %} 로그아웃 구현 start {% endcomment %}
+                {% if user.is_authenticated %}
+                {% comment %} url의 common:logout설정을 매핑하기 위해 common앱의 urls, views를 수정해준다. {% endcomment %}
+                <a class="nav-link" href="{% url 'common:logout' %}">
+                    {{ user.username }} (Logout)
+                </a>
+                {% else %}
+                <a class="nav-link" href="{% url 'common:login' %}">Login</a>
+                {% comment %} 로그아웃 구현 end {% endcomment %}
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</nav>
+{% comment %} navbar end {% endcomment %}

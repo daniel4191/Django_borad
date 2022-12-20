@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.utils import timezone
+from django.core.paginator import Paginator
 
 from .models import Question
 from .forms import QuestionForm, AnswerForm
@@ -12,9 +13,26 @@ def index(request):
 
     print pybo lists
     """
+    # 코드 2
+    # 입력 인자
+    # 여기서 get인자로 들어온 page는 request에 포함된 page를 의미하는 것이고
+    # 이런 page인자에 대한 넘버가 없는 경우 자동 리턴값으로 1을 추가해준것
+    page = request.GET.get('page', '1')  # page
+
+    # 조회
     question_list = Question.objects.order_by('-create_date')
-    context = {'question_list': question_list}
+
+    # 페이징 처리
+    paginator = Paginator(question_list, 10)  # 페이지당 10개의 포스트
+    page_obj = paginator.get_page(page)
+
+    context = {'question_list': page_obj}
     return render(request, 'pybo/question_list.html', context)
+
+    # 코드 1
+    # question_list = Question.objects.order_by('-create_date')
+    # context = {'question_list': question_list}
+    # return render(request, 'pybo/question_list.html', context)
 
 # 이게 app단위의 urls로 보내지는 매핑용 인자다
 # 물론 기본적으로는 동일한 앱단위 폴더 안에서만 매핑이 가능한거같다.

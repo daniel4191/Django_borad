@@ -20,5 +20,8 @@ from pybo import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('pybo/', include('pybo.urls'))
+    path('pybo/', include('pybo.urls')),
+    path('common/', include('common.urls')),
+    # 이 경로는 로그인 후에 나오는 index (localhost:8000)페이지에 설정된 것이 없기에 설정해준다.
+    path('', views.index, name="index")
 ]
