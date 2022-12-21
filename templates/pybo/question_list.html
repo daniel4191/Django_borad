@@ -8,10 +8,11 @@
 <div class="container my-3">
     <table class="table">
         <thead>
-        <tr class="thead-dark">
-            <th>number</th>
-            <th>title</th>
-            <th>writed date and time</th>
+        <tr class="text-center thead-dark">
+            <th>Number</th>
+            <th style="width:50%;">Title</th>
+            <th>Author</th>
+            <th>Writed Date And Time</th>
         </tr>
         </thead>
         <tbody>
@@ -19,13 +20,13 @@
         {% endcomment %}
         {% if question_list %}
         {% for question in question_list %}
-        <tr>
+        <tr class="text-center">
             {% comment %} 코드 1 {% endcomment %}
             {% comment %} <td>{{ forloop.counter }}</td> {% endcomment %}
             {% comment %} 코드 2 {% endcomment %}
             {% comment %} 포스트 넘버를 역순으로 보여주는 수식 {% endcomment %}
             <td>{{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1 }}</td>
-            <td>
+            <td class="text-left">
                 <a href="{% url 'pybo:detail' question.id %}">
                     {{ question.subject }}
                 </a>
@@ -38,6 +39,8 @@
                 {% endif %}
                 {% comment %} 질문에 달린 답변의 갯수 표시 end {% endcomment %}
             </td>
+            {% comment %} 글쓴이 추가 {% endcomment %}
+            <td>{{ question.author.username }}</td>
             <td>{{ question.create_date }}</td>
         </tr>
         {% endfor %}
@@ -61,7 +64,7 @@
         {% else %}
         <li class="page-item disabled">
             <a class="page-link" tabindex="-1" aria-disabled="true" href="#">
-                previous
+                Previous
             </a>
         </li>
         {% endif %}
@@ -90,7 +93,7 @@
         {% if question_list.has_next %}
         <li class="page-item">
             <a class="page-link" href="?page={{ question_list.next_page_number }}">
-                next
+                Next
             </a>
         </li>
         {% else %}
@@ -104,7 +107,7 @@
     {% comment %} paging process end {% endcomment %}
     
     <a href="{% url 'pybo:question_create' %}" class="btn btn-primary">
-        question submit
+        Question submit
     </a>
 </div>
 {% endblock  %}
