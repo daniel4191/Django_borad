@@ -25,5 +25,17 @@ urlpatterns = [
 
     # 답변 삭제 기능
     path('answer/delete/<int:answer_id>/',
-         views.answer_delete, name='answer_delete')
+         views.answer_delete, name='answer_delete'),
+
+    # 댓글 추가
+    path('comment/create/question/<int:question_id>/',
+         views.comment_create_question, name='comment_create_question'),
+
+    # 댓글 수정
+    path('comment/modify/question/<int:comment_id>/',
+         views.comment_modify_question, name='comment_modify_question'),
+
+    # 댓글 삭제
+    path('comment/delete/question/<int:comment_id>/',
+         views.comment_delete_question, name='comment_delete_question'),
 ]
