@@ -10,6 +10,7 @@
         <thead>
         <tr class="text-center thead-dark">
             <th>Number</th>
+            <th>Recommend</th>
             <th style="width:50%;">Title</th>
             <th>Author</th>
             <th>Writed Date And Time</th>
@@ -26,6 +27,17 @@
             {% comment %} 코드 2 {% endcomment %}
             {% comment %} 포스트 넘버를 역순으로 보여주는 수식 {% endcomment %}
             <td>{{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1 }}</td>
+
+            {% comment %} 추천 수 표시 start {% endcomment %}
+            <td>
+                {% if question.voter.all.count > 0 %}
+                <span class="badge badge-warning px-2 py-1">
+                    {{ question.voter.all.count }}
+                </span>
+                {% endif %}
+            </td>
+            {% comment %} 추천 수 표시 end {% endcomment %}
+
             <td class="text-left">
                 <a href="{% url 'pybo:detail' question.id %}">
                     {{ question.subject }}

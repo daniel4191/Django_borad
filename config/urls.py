@@ -16,12 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 # 이렇게 import 해오는 것을 생각하지 못했었다.
-from pybo import views
+from pybo.views import base_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('pybo/', include('pybo.urls')),
     path('common/', include('common.urls')),
     # 이 경로는 로그인 후에 나오는 index (localhost:8000)페이지에 설정된 것이 없기에 설정해준다.
-    path('', views.index, name="index")
+    path('', base_views.index, name="index")
 ]
