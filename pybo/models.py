@@ -27,3 +27,14 @@ class Answer(models.Model):
     # null은 데이터베이스상의 컬럼값(필드값이라고도 부른다.)의 공백 유무를 말하며
     # blank는 form.is_valid()로 유효성 검사를 할때 값 유무에 대해서 말한다.
     modify_date = models.DateTimeField(null=True, blank=True)
+
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    create_date = models.DateTimeField()
+    modify_date = models.DateTimeField(null=True, blank=True)
+    question = models.ForeignKey(
+        Question, null=True, blank=True, on_delete=models.CASCADE)
+    answer = models.ForeignKey(
+        Answer, null=True, blank=True, on_delete=models.CASCADE)
