@@ -12,6 +12,16 @@
                 {{ question.content }}
             </div>
             <div class="d-flex justify-content-end">
+                
+                {% comment %} 수정일시 추가 start {% endcomment %}
+                {% if question.modify_date %}
+                <div class="badge badge-light p-2 text-left mx-3">
+                    <div class="mb-2">modified at</div>
+                    <div>{{ question.modify_date }}</div>
+                </div>
+                {% endif %}
+                {% comment %} 수정일시 추가 end {% endcomment %}
+                
                 <div class="badge badge-light p-2 text-left">
                     <div class="mb-2">{{ question.author.username }}</div>
                     <div>{{ question.create_date }}</div>
@@ -45,6 +55,16 @@
                 {{ answer.content }}
             </div>
             <div class="d-flex justify-content-end">
+
+                {% comment %} 수정일시 start {% endcomment %}
+                {% if answer.modify_date %}
+                <div class="badge badge-light p-2 text-left mx-3">
+                    <div class="mb-2">modified at</div>
+                    <div>{{ answer.modify_date }}</div>
+                </div>
+                {% endif %}
+                {% comment %} 수정일시 end {% endcomment %}
+
                 <div class="badge badge-light p-2 text-left">
                     <div class="mb-2">{{ answer.author.username }}</div>
                     <div>{{ answer.create_date }}</div>                    
