@@ -143,6 +143,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # '/'로 할 경우 localhost:8000 페이지와 같은 초기 index화면으로 이동되게 된다.
 # 하지만 이러할지라도 localhost:8000페이지에 내용이 없다면 당연히 404에러가 나온다.
 # 이를 해결해 주기 위해서 프로젝트 단위의 urls.py를 수정하자.
+# '/'는 "루트 이동 명령"이다. 바로 전 페이지로의 이동이 아니라.
 LOGIN_REDIRECT_URL = '/'
 
 # 로그아웃 성공하면 이동할 URL
