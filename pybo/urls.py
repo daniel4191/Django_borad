@@ -38,7 +38,7 @@ urlpatterns = [
     path('comment/modify/answer/<int:comment_id>/',
          comment_views.comment_modify_answer, name="comment_modify_answer"),
     path('comment/delete/answer/<int:comment_id>/',
-         comment_views.comment_delete_answer, name="comment_create_answer"),
+         comment_views.comment_delete_answer, name="comment_delete_answer"),
 
     # vote_views.py
     path('vote/question/<int:question_id>/',

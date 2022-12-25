@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load pybo_filter %}
 
 {% comment %} {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}"> {% endcomment %}
@@ -31,9 +32,7 @@
     {% comment %} 질문추천과는 관계없는 코드 start {% endcomment %}
             <div class="card">
                 <div class="card-body">
-                    <div class="card-text" style="white-space: pre-line;">
-                        {{ question.content }}
-                    </div>
+                    <div class="card-text">{{ question.content|mark }}</div>
                     <div class="d-flex justify-content-end">
                         
                         {% comment %} 수정일시 추가 start {% endcomment %}
@@ -122,9 +121,7 @@
             {% comment %} 답변 추천 외에 기존 내용 start {% endcomment %}
             <div class="card">
                 <div class="card-body">
-                    <div class="card-text" style="white-space: pre-line;">
-                        {{ answer.content }}
-                    </div>
+                    <div class="card-text">{{ answer.content|mark }}</div>
                     <div class="d-flex justify-content-end">
 
                         {% comment %} 수정일시 start {% endcomment %}
